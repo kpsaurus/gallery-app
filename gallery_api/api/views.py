@@ -1,19 +1,25 @@
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.core.files.storage import default_storage
-from django.conf import settings
+from .utils import get_contents
+import os
+from .serializer import PathSerializer
+from rest_framework.permissions import AllowAny
 
 
-class HomeView(APIView):
-    def get(self, request, format=None):
+class ReadObjectView(APIView):
+    permission_classes = [AllowAny, ]
+
+    def post(self, request, path=None, format=None):
         """
         Return the folders and files inside root dir.
         """
-        directories, files = default_storage.listdir('')
-        root_dir = {
-            'folders': directories,
-            'files': files
-        }
-
-        data = {'root_dir': root_dir}
+        serializer = PathSerializer(data=request.data)
+        if serializer.is_valid():
+            path = serializer.data['path']
+            if path:
+                data = get_contents(os.getenv("AWS_S3_ROOT_DIRECTORY") + path)
+            else:
+                data = get_contents(os.getenv('AWS_S3_ROOT_DIRECTORY'))
+        else:
+            data = serializer.errors
         return Response(data)
