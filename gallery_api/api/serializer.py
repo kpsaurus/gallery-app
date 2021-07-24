@@ -8,3 +8,7 @@ class PathSerializer(serializers.Serializer):
 class UploadSerializer(serializers.Serializer):
     file = serializers.FileField()
     path = serializers.CharField(required=False, allow_blank=True)
+
+
+class DeleteSerializer(serializers.Serializer):
+    file = serializers.CharField()

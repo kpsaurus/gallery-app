@@ -1,9 +1,9 @@
-from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from .utils import get_contents, s3_client
 import os
-from .serializer import PathSerializer, UploadSerializer
+from .serializer import PathSerializer, UploadSerializer, DeleteSerializer
 from rest_framework.permissions import AllowAny
 
 
@@ -28,7 +28,7 @@ class ReadObjectView(APIView):
 
 class ObjectView(APIView):
     permission_classes = [AllowAny, ]
-    parser_classes = (MultiPartParser, FormParser)
+    parser_classes = (MultiPartParser, FormParser, JSONParser)
 
     def put(self, request):
         serializer = UploadSerializer(data=request.data)
@@ -47,6 +47,17 @@ class ObjectView(APIView):
 
             client.upload_fileobj(file, f"{os.getenv('AWS_S3_BUCKET_NAME')}", target)
 
+            data = {'msg': 'success'}
+        else:
+            data = serializer.errors
+        return Response(data)
+
+    def delete(self, request):
+        serializer = DeleteSerializer(data=request.data)
+        if serializer.is_valid():
+            client = s3_client()
+            target_file = os.getenv('AWS_S3_ROOT_DIRECTORY') + serializer.data['file']
+            client.delete_object(Bucket=f"{os.getenv('AWS_S3_BUCKET_NAME')}", Key=f'{target_file}')
             data = {'msg': 'success'}
         else:
             data = serializer.errors
