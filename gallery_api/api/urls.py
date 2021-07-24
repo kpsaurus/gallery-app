@@ -1,7 +1,8 @@
+from django.conf.urls import url
 from django.urls import path
-from rest_framework.urlpatterns import format_suffix_patterns
-from .views import HomeView
+from .views import ReadObjectView
 
 urlpatterns = [
-    path('', HomeView.as_view()),
+    path('', ReadObjectView.as_view()),
+    url(r'^(?P<path>[a-zA-Z.\/]*)/$', ReadObjectView.as_view())
 ]
