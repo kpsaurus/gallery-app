@@ -162,3 +162,7 @@ STATIC_ROOT = 'static/'
 
 MEDIA_URL = 'https://%s/%s/' % (AWS_S3_ENDPOINT_URL, 'media')
 MEDIA_ROOT = 'media/'
+
+FILE_UPLOAD_HANDLERS = [
+    'django.core.files.uploadhandler.TemporaryFileUploadHandler',
+]
