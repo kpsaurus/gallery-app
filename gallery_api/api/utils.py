@@ -3,18 +3,23 @@ import os
 import boto3
 
 
-def get_contents(path):
-    """
-    Retrieving the objects from the bucket.
-    :param path: object path.
-    :return: result dict.
-    """
+def s3_client():
     session = boto3.session.Session()
     client = session.client('s3', region_name=os.getenv('AWS_S3_REGION'),
                             endpoint_url=os.getenv('AWS_S3_ENDPOINT_URL_WITHOUT_BUCKET_NAME'),
                             aws_access_key_id=settings.AWS_ACCESS_KEY_ID,
                             aws_secret_access_key=settings.AWS_SECRET_ACCESS_KEY,
                             )
+    return client
+
+
+def get_contents(path):
+    """
+    Retrieving the objects from the bucket.
+    :param path: object path.
+    :return: result dict.
+    """
+    client = s3_client()
     result = client.list_objects(Bucket=f'{os.getenv("AWS_S3_BUCKET_NAME")}',
                                  Prefix=f'{path}', Delimiter='/')
     folders = []
