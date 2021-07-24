@@ -11,18 +11,23 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from dotenv import load_dotenv
+
 BASE_DIR = Path(__file__).resolve().parent.parent
+dotenv_path = os.path.join(BASE_DIR, '.env')
+load_dotenv(dotenv_path)
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-e$x_i_a9sq#o%_q6j+-h&_)ty(v_qb$kz9x3a(_e@^vnk86q-o'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = os.environ['DEBUG'] == 'True'
 
 ALLOWED_HOSTS = []
 
@@ -112,17 +117,6 @@ USE_L10N = True
 
 USE_TZ = True
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/3.2/howto/static-files/
-
-STATIC_URL = '/static/'
-MEDIA_URL = '/media/'
-STATIC_ROOT = 'static/'
-MEDIA_ROOT = 'media/'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
@@ -138,3 +132,33 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3002",
     "http://127.0.0.1:3002"
 ]
+
+AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
+AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
+AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
+AWS_S3_ENDPOINT_URL = os.getenv('AWS_S3_ENDPOINT_URL')
+AWS_S3_OBJECT_PARAMETERS = {
+    'CacheControl': 'max-age=86400',
+}
+
+AWS_QUERYSTRING_AUTH = False
+
+AWS_LOCATION = os.getenv('AWS_LOCATION')
+
+AWS_DEFAULT_ACL = 'public-read'
+
+AWS_S3_SIGNATURE_VERSION = 's3v4'
+
+# STATICFILES_DIRS = [
+#     os.path.join(BASE_DIR, 'static'),
+# ]
+
+STATICFILES_STORAGE = 'gallery_api.storage.StaticStorage'
+DEFAULT_FILE_STORAGE = 'gallery_api.storage.MediaStorage'
+
+# Use AWS_S3_ENDPOINT_URL here if you haven't enabled the CDN and got a custom domain.
+STATIC_URL = 'https://%s/%s/' % (AWS_S3_ENDPOINT_URL, 'static')
+STATIC_ROOT = 'static/'
+
+MEDIA_URL = 'https://%s/%s/' % (AWS_S3_ENDPOINT_URL, 'media')
+MEDIA_ROOT = 'media/'
