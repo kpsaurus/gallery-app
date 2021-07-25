@@ -1,7 +1,5 @@
+import { breakWord } from "../utils/Styles";
 function Folder({ folder }) {
-    const breakWord = {
-        wordBreak: 'break-word'
-    }
     return (
         <div className="uk-tile uk-padding-small uk-tile-muted uk-margin-bottom">
             <span uk-icon="folder"></span>
