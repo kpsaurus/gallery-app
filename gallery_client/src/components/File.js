@@ -5,7 +5,7 @@ function File({ file }) {
     return (
         <div className="uk-tile uk-tile-muted uk-margin-bottom">
             <span uk-icon="image"></span>
-            <h3 style={breakWord}>{file.name}</h3>
+            <h5 style={breakWord}>{file.name}</h5>
         </div>
     )
 }
