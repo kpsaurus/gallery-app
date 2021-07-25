@@ -38,7 +38,7 @@ function NewFolder({ folder }) {
 
     return (
         <div>
-            <div className="uk-tile uk-tile-muted uk-margin-bottom">
+            <div className="uk-tile uk-padding-small uk-tile-muted uk-margin-bottom">
                 <h5 style={inputStyle} autoFocus ref={inputFolderName} contentEditable="true" onInput={renameFolder} onBlur={focusOut}  suppressContentEditableWarning={true}>{newFolderName.name}</h5>
                 <button className="uk-button uk-button-default">Save</button>
             </div>
