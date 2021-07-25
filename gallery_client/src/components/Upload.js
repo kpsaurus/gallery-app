@@ -38,8 +38,8 @@ function Upload({ path, fetchData }) {
     }
 
     return (
-        <div>
-            <label className='uk-tile uk-tile-primary' style={fileUpload}>
+        <div className='uk-button uk-button-primary uk-width-1-1 uk-width-auto@s'>
+            <label style={fileUpload}>
                 <input className='uk-hidden' type="file" name='file' onChange={fileChange}/>
                 <span uk-icon="icon: upload"></span> Upload File
             </label>
