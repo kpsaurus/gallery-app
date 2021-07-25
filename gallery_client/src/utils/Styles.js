@@ -1,19 +1,34 @@
-const newFolderFocusOutline = {
+const newFolderFocusOutlineStyle = {
     'outline': '1px dashed blue',
     'lineHeight': 3
 }
 
-const newFolderBlurOutline = {
+const newFolderBlurOutlineStyle = {
     'outline': '1px dashed black',
     'lineHeight':3
 }
 
-const breakWord = {
-        wordBreak: 'break-word'
+const breakWordStyle = {
+    wordBreak: 'break-word'
+}
+
+const selectItemStyle = {
+    border:'1px solid blue',
+}
+
+const hoverInStyle = {
+    cursor:'pointer'
+}
+
+const hoverOutStyle = {
+    cursor:'unset'
 }
 
 export {
-    newFolderFocusOutline,
-    newFolderBlurOutline,
-    breakWord,
+    newFolderFocusOutlineStyle,
+    newFolderBlurOutlineStyle,
+    breakWordStyle,
+    selectItemStyle,
+    hoverInStyle,
+    hoverOutStyle,
 }
