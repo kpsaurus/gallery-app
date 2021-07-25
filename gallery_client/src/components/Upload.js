@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import client from '../axios/client';
 
 
-function Upload({ path }) {
+function Upload({ path, fetchData }) {
     
     const [file,setFile]=useState(null)
 
@@ -15,7 +15,9 @@ function Upload({ path }) {
             'object/',formData
         ).then(res => {
             if (res) {
-                console.log(res)
+                if (res.data.msg == 'success') {
+                    fetchData()
+                }
             } else {
                 
             }
@@ -39,7 +41,7 @@ function Upload({ path }) {
         <div>
             <label className='uk-tile uk-tile-primary' style={fileUpload}>
                 <input className='uk-hidden' type="file" name='file' onChange={fileChange}/>
-                <span uk-icon="icon: upload"></span> Custom Upload
+                <span uk-icon="icon: upload"></span> Upload File
             </label>
        </div>
     )
