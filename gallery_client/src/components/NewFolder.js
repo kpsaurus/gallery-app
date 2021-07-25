@@ -1,19 +1,19 @@
 import React, { useState,useRef, useEffect } from 'react';
-import { newFolderBlurOutline, newFolderFocusOutline } from '../utils/Styles';
+import { newFolderBlurOutlineStyle, newFolderFocusOutlineStyle } from '../utils/Styles';
 function NewFolder({ folder }) {
 
     const [newFolderName, setNewFolderName] = useState(folder);
-    const [inputStyle, setInputStyle] = useState(newFolderFocusOutline)
+    const [inputStyle, setInputStyle] = useState(newFolderFocusOutlineStyle)
 
 
     const renameFolder = (e) => {
         const newName = e.target.textContent
 
-        setInputStyle(newFolderFocusOutline)
+        setInputStyle(newFolderFocusOutlineStyle)
     }
 
     const focusOut = (e) => {
-        setInputStyle(newFolderBlurOutline)
+        setInputStyle(newFolderBlurOutlineStyle)
     }
 
     const inputFolderName = useRef(null);
