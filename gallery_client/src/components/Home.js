@@ -38,9 +38,12 @@ function Home() {
     return (
         <div>
             <hr className="uk-divider-icon"></hr>
-            <div className="uk-flex uk-flex-between">
-            <p>Current path: {path ? path : '"/"'}</p>
-                <button className="uk-button uk-button-secondary" onClick={addFolder}>Add a new folder</button>
+            <div className="uk-flex uk-flex-between uk-flex-wrap">
+                <p>Current path: {path ? path : '"/"'}</p>
+                <div className="uk-flex uk-flex-wrap">
+                    <Upload path={path} fetchData={fetchData} />
+                    <button className="uk-button uk-button-secondary uk-width-1-1 uk-width-auto@s" onClick={addFolder}>Add a new folder</button>
+                </div>
             </div>
             <hr></hr>
             <div className="uk-grid uk-child-width-1-4@m uk-grid-match">
@@ -62,7 +65,7 @@ function Home() {
                 )) : ''
             }
 
-            <Upload path={path} fetchData={fetchData} />
+            
             </div>
         </div>
     )
