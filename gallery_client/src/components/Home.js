@@ -28,7 +28,7 @@ function Home() {
         fetchData()
   },[]);
 
-    return (<div className="uk-grid uk-child-width-1-4@m">
+    return (<div className="uk-grid uk-child-width-1-4@m uk-grid-match">
         
         {   items.folders ? (
             items.folders.map((folder,index) => <div key={index}>
