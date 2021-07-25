@@ -43,7 +43,7 @@ function Home() {
             )) : ''
         }
 
-        <Upload path={path} setPath={setPath} />
+        <Upload path={path} fetchData={fetchData} />
     </div>
     )
 }
