@@ -2,17 +2,19 @@ import React, { useState, useEffect } from 'react';
 import client from '../axios/client';
 import Folder from './Folder';
 import File from './File';
+import Upload from './Upload';
 
 function Home() {
 
     const [items, setItem] = useState([])
+    const [path, setPath] = useState('')
 
     async function fetchData() {
-        await client.get(
-            '/'
+        await client.post(
+            '/',{'path':path}
         ).then(res => {
             if (res) {
-                setItem(res.data.root_dir)
+                setItem(res.data.contents)
             } else {
                 
             }
@@ -21,7 +23,6 @@ function Home() {
 
         })
     }
-
 
     useEffect(() => {
         fetchData()
@@ -41,6 +42,8 @@ function Home() {
                 </div>
             )) : ''
         }
+
+        <Upload path={path} setPath={setPath} />
     </div>
     )
 }
