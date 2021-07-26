@@ -24,6 +24,13 @@ const hoverOutStyle = {
     cursor:'unset'
 }
 
+const themeColorStyle = {
+    color: '#00bcd4'
+}
+const themeColorBgStyle = {
+    background: '#00bcd4'
+}
+
 export {
     newFolderFocusOutlineStyle,
     newFolderBlurOutlineStyle,
@@ -31,4 +38,6 @@ export {
     selectItemStyle,
     hoverInStyle,
     hoverOutStyle,
+    themeColorStyle,
+    themeColorBgStyle,
 }
