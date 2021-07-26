@@ -4,7 +4,7 @@ import Folder from './Folder';
 import NewFolder from './NewFolder';
 import File from './File';
 import Upload from './Upload';
-
+import UIkit from 'uikit';
 function Home() {
 
     const [items, setItem] = useState([])
@@ -17,8 +17,14 @@ function Home() {
         ).then(res => {
             if (res) {
                 setItem(res.data.contents)
-            } else {
                 
+            } else {
+                UIkit.notification({
+                message: 'Failed to load',
+                status: 'danger',
+                pos: 'bottom-center',
+                timeout: 3000
+            });
             }
 
         }).catch(err => {
@@ -65,7 +71,7 @@ function Home() {
                 )) : ''
             }
 
-            
+                
             </div>
         </div>
     )

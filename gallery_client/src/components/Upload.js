@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import client from '../axios/client';
-
+import UIkit from 'uikit';
 
 function Upload({ path, fetchData }) {
     
@@ -16,13 +16,29 @@ function Upload({ path, fetchData }) {
         ).then(res => {
             if (res) {
                 if (res.data.msg == 'success') {
+                    UIkit.notification({
+                    message: 'Successfully uploaded the file',
+                    status: 'success',
+                    pos: 'bottom-center',
+                    timeout: 3000
+                });
                     fetchData()
                 }
             } else {
-                
+                UIkit.notification({
+                    message: 'Failed to upload the file',
+                    status: 'danger',
+                    pos: 'bottom-center',
+                    timeout: 3000
+                });
             }
         }).catch(err => {
-            console.error(err)
+            UIkit.notification({
+                    message: 'Failed to upload the file',
+                    status: 'danger',
+                    pos: 'bottom-center',
+                    timeout: 3000
+                });
         })
     }
 
