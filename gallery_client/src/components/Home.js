@@ -88,7 +88,7 @@ function Home() {
             
             {   items.folders ? (
                 items.folders.map((folder,index) => <div key={index}>
-                    <Folder folder={folder} />
+                    <Folder folder={folder} setPath={setPath} />
                     </div>
                 )) : ''
             }
