@@ -15,7 +15,7 @@ function Upload({ path, fetchData }) {
             'object/',formData
         ).then(res => {
             if (res) {
-                if (res.data.msg == 'success') {
+                if (res.data.status == 'success') {
                     UIkit.notification({
                     message: 'Successfully uploaded the file',
                     status: 'success',
@@ -23,14 +23,19 @@ function Upload({ path, fetchData }) {
                     timeout: 3000
                 });
                     fetchData()
+                } else {
+                const errors = res.data.errors
+                    for (let i = 0; i < errors.length; i++){
+                        for (let j = 0; j < errors[i]['errors'].length; j++){
+                            UIkit.notification({
+                                message: errors[i].field + ': ' + errors[i]['errors'][j],
+                                status: 'danger',
+                                pos: 'bottom-center',
+                                timeout: 3000
+                            });
+                        }
+                    }
                 }
-            } else {
-                UIkit.notification({
-                    message: 'Failed to upload the file',
-                    status: 'danger',
-                    pos: 'bottom-center',
-                    timeout: 3000
-                });
             }
         }).catch(err => {
             UIkit.notification({
