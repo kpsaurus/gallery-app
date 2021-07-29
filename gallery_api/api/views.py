@@ -67,7 +67,9 @@ class ObjectView(APIView):
             client = s3_client()
             target_file = os.getenv('AWS_S3_ROOT_DIRECTORY') + serializer.data['file']
             client.delete_object(Bucket=f"{os.getenv('AWS_S3_BUCKET_NAME')}", Key=f'{target_file}')
-            data = {'msg': 'success'}
+            response = SUCCESS
         else:
-            data = serializer.errors
-        return Response(data)
+            response = FAILED
+            errors = serializer.errors
+            response['errors'] = restructure_errors(errors)
+        return Response(response)
