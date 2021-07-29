@@ -16,7 +16,21 @@ function Home() {
             '/',{'path':path}
         ).then(res => {
             if (res) {
-                setItem(res.data.contents)
+                if (res.data.status === 'success') {
+                    setItem(res.data.response.contents)
+                } else {
+                    const errors = res.data.errors
+                    for (let i = 0; i < errors.length; i++){
+                        for (let j = 0; j < errors[i]['errors'].length; j++){
+                            UIkit.notification({
+                                message: errors[i].field + ': ' + errors[i]['errors'][j],
+                                status: 'danger',
+                                pos: 'bottom-center',
+                                timeout: 3000
+                            });
+                        }
+                    }
+                }
                 
             } else {
                 UIkit.notification({
@@ -28,7 +42,12 @@ function Home() {
             }
 
         }).catch(err => {
-
+            UIkit.notification({
+                message: 'Failed to load',
+                status: 'danger',
+                pos: 'bottom-center',
+                timeout: 3000
+            });
         })
     }
 
