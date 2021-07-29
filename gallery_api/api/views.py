@@ -1,10 +1,11 @@
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from .utils import get_contents, s3_client
+from .utils import get_contents, s3_client, restructure_errors
 import os
 from .serializer import PathSerializer, UploadSerializer, DeleteSerializer
 from rest_framework.permissions import AllowAny
+from .response_data import SUCCESS, FAILED
 
 
 class ReadObjectView(APIView):
@@ -21,9 +22,14 @@ class ReadObjectView(APIView):
                 data = get_contents(os.getenv("AWS_S3_ROOT_DIRECTORY") + path)
             else:
                 data = get_contents(os.getenv('AWS_S3_ROOT_DIRECTORY'))
+
+            response = SUCCESS
+            response['response'] = data
         else:
-            data = serializer.errors
-        return Response(data)
+            response = FAILED
+            errors = serializer.errors
+            response['errors'] = restructure_errors(errors)
+        return Response(response)
 
 
 class ObjectView(APIView):
