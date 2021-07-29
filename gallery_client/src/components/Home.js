@@ -67,7 +67,7 @@ function Home() {
 
     return (
         <div>
-            <h1 className='uk-text-center uk-text-success pointer'  onClick={e => setPath('')}>Gallery</h1>
+            <h1 className='uk-text-center uk-margin-top uk-text-success pointer'  onClick={e => setPath('')}>Gallery</h1>
             <hr className="uk-divider-icon uk-margin-remove"></hr>
             <div className="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap">
                 <p className="uk-margin-remove">Current path: {path ? path : '"/"'}</p>
@@ -98,7 +98,7 @@ function Home() {
                 
             </div>
             {
-                    itemDetails ? <ItemDetails details={itemDetails} />:''
+                    itemDetails.name ? <ItemDetails details={itemDetails} />:''
             }
         </div>
     )
