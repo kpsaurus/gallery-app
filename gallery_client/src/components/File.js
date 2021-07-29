@@ -14,7 +14,7 @@ function File({ file }) {
     }
 
     return (
-        <div onMouseEnter={mouseHover} onMouseLeave={mouseLeave} onClick={select} style={itemStyle} className="uk-tile uk-padding-small uk-tile-muted uk-margin-bottom">
+        <div onMouseEnter={mouseHover} onMouseLeave={mouseLeave} onClick={select} style={itemStyle} className="uk-tile uk-padding-small uk-tile-muted uk-border-rounded uk-margin-bottom">
             <span uk-icon="image"></span>
             <h5 style={breakWordStyle}>{file.name}</h5>
         </div>
