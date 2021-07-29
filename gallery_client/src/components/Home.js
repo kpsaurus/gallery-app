@@ -5,12 +5,14 @@ import NewFolder from './NewFolder';
 import File from './File';
 import Upload from './Upload';
 import UIkit from 'uikit';
+import ItemDetails from './ItemDetails';
+
 function Home() {
 
     const [items, setItem] = useState([])
     const [newFolder, setNewFolder] = useState({})
     const [path, setPath] = useState('')
-
+    const [itemDetails, setitemDetails]=useState({})
     async function fetchData() {
         await client.post(
             '/',{'path':path}
@@ -18,6 +20,9 @@ function Home() {
             if (res) {
                 if (res.data.status === 'success') {
                     setItem(res.data.response.contents)
+                    if (res.data.response.details) {
+                        setitemDetails(res.data.response.details)
+                    }
                 } else {
                     const errors = res.data.errors
                     for (let i = 0; i < errors.length; i++){
@@ -58,19 +63,20 @@ function Home() {
 
     useEffect(() => {
         fetchData()
-  },[]);
+  },[path]);
 
     return (
         <div>
-            <hr className="uk-divider-icon"></hr>
-            <div className="uk-flex uk-flex-between uk-flex-wrap">
-                <p>Current path: {path ? path : '"/"'}</p>
+            <h1 className='uk-text-center uk-text-success pointer'  onClick={e => setPath('')}>Gallery</h1>
+            <hr className="uk-divider-icon uk-margin-remove"></hr>
+            <div className="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap">
+                <p className="uk-margin-remove">Current path: {path ? path : '"/"'}</p>
                 <div className="uk-flex uk-flex-wrap">
                     <Upload path={path} fetchData={fetchData} />
                     <button className="uk-button uk-button-secondary uk-width-1-1 uk-width-auto@s" onClick={addFolder}>Add a new folder</button>
                 </div>
             </div>
-            <hr></hr>
+            <hr className="uk-margin-small"></hr>
             <div className="uk-grid uk-child-width-1-4@m uk-grid-match">
 
             {
@@ -85,13 +91,15 @@ function Home() {
             }
             {   items.files ? (
                 items.files.map((file,index) => <div key={index}>
-                    <File file={file} />
+                    <File file={file} setPath={setPath} />
                     </div>
                 )) : ''
             }
-
                 
             </div>
+            {
+                    itemDetails ? <ItemDetails details={itemDetails} />:''
+            }
         </div>
     )
 }
