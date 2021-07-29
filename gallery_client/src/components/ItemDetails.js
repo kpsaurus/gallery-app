@@ -9,7 +9,6 @@ function ItemDetails({details}) {
                 <h4>Size: {(details.size / 1024).toFixed(2)} KB</h4>
             </div>
         </div>
-        
     </div>
     )
 }
