@@ -101,7 +101,7 @@ function Home() {
                 
             </div>
             {
-                itemDetails.name ? <ItemDetails path={path} details={itemDetails} />:''
+                itemDetails.name ? <ItemDetails path={path} setPath={setPath} details={itemDetails} />:''
             }
         </div>
     )
