@@ -53,10 +53,13 @@ class ObjectView(APIView):
 
             client.upload_fileobj(file, f"{os.getenv('AWS_S3_BUCKET_NAME')}", target)
 
-            data = {'msg': 'success'}
+            response = SUCCESS
         else:
-            data = serializer.errors
-        return Response(data)
+            response = FAILED
+            errors = serializer.errors
+            response['errors'] = restructure_errors(errors)
+
+        return Response(response)
 
     def delete(self, request):
         serializer = DeleteSerializer(data=request.data)
