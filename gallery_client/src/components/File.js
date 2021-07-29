@@ -1,9 +1,12 @@
 import { breakWordStyle, selectItemStyle,hoverInStyle,hoverOutStyle } from "../utils/Styles";
 import { useState } from 'react';
-function File({ file }) {
+function File({ file, setPath }) {
     const [itemStyle, setItemStyle] = useState({})
+
     const select = (e) => {
         setItemStyle(selectItemStyle)
+        setPath(file.name)
+
     }
     const mouseHover = (e) => {
         setItemStyle(hoverInStyle)
