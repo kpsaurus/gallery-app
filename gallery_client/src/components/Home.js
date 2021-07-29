@@ -71,10 +71,13 @@ function Home() {
             <hr className="uk-divider-icon uk-margin-remove"></hr>
             <div className="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap">
                 <p className="uk-margin-remove">Current path: {path ? path : '"/"'}</p>
-                <div className="uk-flex uk-flex-wrap">
+                {!itemDetails.name ? 
+                    <div className="uk-flex uk-flex-wrap">
                     <Upload path={path} fetchData={fetchData} />
                     <button className="uk-button uk-button-secondary uk-width-1-1 uk-width-auto@s" onClick={addFolder}>Add a new folder</button>
-                </div>
+                </div>:''
+                }
+                
             </div>
             <hr className="uk-margin-small"></hr>
             <div className="uk-grid uk-child-width-1-4@m uk-grid-match">
