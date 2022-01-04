@@ -1,4 +1,3 @@
-import logo from "./logo.svg";
 import "./App.css";
 import { PathProvider } from "./context/Context";
 import Home from "./components/Home";

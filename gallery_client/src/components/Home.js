@@ -9,6 +9,7 @@ import ItemDetails from "./ItemDetails";
 import { pathContext } from "../context/Context";
 
 function Home() {
+	console.log("Home component");
 	const { path, setPath } = useContext(pathContext);
 	const [items, setItem] = useState([]);
 	const [newFolder, setNewFolder] = useState({});

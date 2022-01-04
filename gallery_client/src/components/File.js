@@ -8,8 +8,9 @@ import { useState, useContext } from "react";
 import { pathContext } from "../context/Context";
 
 function File({ file }) {
+	console.log("File component");
 	const [itemStyle, setItemStyle] = useState({});
-	const { path, setPath } = useContext(pathContext);
+	const { setPath } = useContext(pathContext);
 	const select = (e) => {
 		setItemStyle(selectItemStyle);
 		setPath(file.name);

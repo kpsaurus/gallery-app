@@ -4,11 +4,12 @@ import {
 	newFolderFocusOutlineStyle,
 } from "../utils/Styles";
 function NewFolder({ folder }) {
+	console.log("New Folder component");
 	const [newFolderName, setNewFolderName] = useState(folder);
 	const [inputStyle, setInputStyle] = useState(newFolderFocusOutlineStyle);
 
 	const renameFolder = (e) => {
-		const newName = e.target.textContent;
+		//const newName = e.target.textContent;
 
 		setInputStyle(newFolderFocusOutlineStyle);
 	};

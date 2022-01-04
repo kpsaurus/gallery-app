@@ -4,6 +4,7 @@ import { pathContext } from "../context/Context";
 import { useContext } from "react";
 
 function ItemDetails({ details }) {
+	console.log("Item Details component");
 	const { path, setPath } = useContext(pathContext);
 
 	async function deleteItem() {
@@ -47,7 +48,7 @@ function ItemDetails({ details }) {
 		<div>
 			<div className="uk-grid uk-child-width-1-2@m">
 				<div>
-					<img src={details.url}></img>
+					<img src={details.url} alt="image"></img>
 				</div>
 				<div>
 					<h4>{details.name}</h4>

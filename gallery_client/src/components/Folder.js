@@ -1,10 +1,9 @@
 import { breakWordStyle, selectItemStyle } from "../utils/Styles";
 import { useState, useContext } from "react";
 import { pathContext } from "../context/Context";
-
 function Folder({ folder }) {
 	const [itemStyle, setItemStyle] = useState({});
-	const { path, setPath } = useContext(pathContext);
+	const { setPath } = useContext(pathContext);
 	const select = (e) => {
 		setPath(folder.name);
 		setItemStyle(selectItemStyle);

@@ -4,8 +4,9 @@ import UIkit from "uikit";
 import { pathContext } from "../context/Context";
 
 function Upload({ fetchData }) {
-	const [file, setFile] = useState(null);
-	const { path, setPath } = useContext(pathContext);
+	console.log("Folder component");
+	const [setFile] = useState(null);
+	const { path } = useContext(pathContext);
 
 	const fileUpload = {
 		cursor: "pointer",
