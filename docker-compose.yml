@@ -1,0 +1,26 @@
+version: '3.7'
+services:
+  api:
+    build:
+      context: ./gallery_api
+    container_name: 'Gallery-API'
+    ports:
+      - 8000:8000
+    volumes:
+      - ./gallery_api:/app
+      - .gallery_api/static:/app/static
+      - static-files:/static
+    env_file:
+      - ./gallery_api/.env
+    restart: on-failure
+    networks:
+      - gallery_api_network
+
+volumes:
+  static-files:
+      name: gallery_api_volume
+
+networks:
+  gallery_api_network:
+    external:
+       name: gallery_network
