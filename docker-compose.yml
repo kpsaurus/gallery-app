@@ -16,6 +16,20 @@ services:
     networks:
       - gallery_api_network
 
+  client:
+    build:
+      context: ./gallery_client
+    container_name: 'Gallery-App'
+    ports:
+      - 3000:3000
+    volumes:
+      - ./gallery_client:/app
+    env_file:
+      - ./gallery_client/.env.development
+    restart: on-failure
+    networks:
+      - gallery_client_network
+
 volumes:
   static-files:
       name: gallery_api_volume
@@ -23,4 +37,7 @@ volumes:
 networks:
   gallery_api_network:
     external:
-       name: gallery_network
+      name: gallery_network
+  gallery_client_network:
+    external:
+      name: gallery_network
