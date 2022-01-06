@@ -5,7 +5,7 @@ import { pathContext } from "../context/Context";
 import UIkit from "uikit";
 import client from "../axios/client";
 
-function NewFolder({ folder }) {
+function NewFolder({ folder, setNewFolder, fetchData }) {
 	console.log("New Folder component");
 	const { path, setPath } = useContext(pathContext);
 
@@ -21,6 +21,8 @@ function NewFolder({ folder }) {
 							pos: "bottom-center",
 							timeout: 3000,
 						});
+						fetchData();
+						setNewFolder("");
 					} else {
 						const errors = res.data.errors;
 						for (let i = 0; i < errors.length; i++) {
