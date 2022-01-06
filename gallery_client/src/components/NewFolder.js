@@ -1,47 +1,24 @@
-import React, { useState, useRef, useEffect } from "react";
-import {
-	newFolderBlurOutlineStyle,
-	newFolderFocusOutlineStyle,
-} from "../utils/Styles";
+import React, { useEffect } from "react";
+
 function NewFolder({ folder }) {
 	console.log("New Folder component");
-	const [newFolderName, setNewFolderName] = useState(folder);
-	const [inputStyle, setInputStyle] = useState(newFolderFocusOutlineStyle);
-
-	const renameFolder = (e) => {
-		//const newName = e.target.textContent;
-
-		setInputStyle(newFolderFocusOutlineStyle);
-	};
-
-	const focusOut = (e) => {
-		setInputStyle(newFolderBlurOutlineStyle);
-	};
-
-	const inputFolderName = useRef(null);
 
 	const createFolder = () => {
-		setNewFolderName(inputFolderName.current.textContent);
+		// save
 	};
 
 	useEffect(() => {
-		inputFolderName.current.focus();
-	}, [inputFolderName]);
+		//
+	}, []);
 
 	return (
 		<div>
 			<div className="uk-tile uk-padding-small uk-tile-muted uk-margin-bottom">
-				<h5
-					style={inputStyle}
-					autoFocus
-					ref={inputFolderName}
-					contentEditable="true"
-					onInput={renameFolder}
-					onBlur={focusOut}
-					suppressContentEditableWarning={true}
-				>
-					{newFolderName.name}
-				</h5>
+				<input
+					type="text"
+					className="uk-input uk-border-rounded"
+					placeholder="New folder name"
+				></input>
 				<button className="uk-button uk-button-default" onClick={createFolder}>
 					Save
 				</button>
