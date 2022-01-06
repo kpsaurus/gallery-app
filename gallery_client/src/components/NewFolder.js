@@ -1,50 +1,85 @@
-import React, { useState, useRef, useEffect } from "react";
-import {
-	newFolderBlurOutlineStyle,
-	newFolderFocusOutlineStyle,
-} from "../utils/Styles";
-function NewFolder({ folder }) {
+import React, { useEffect } from "react";
+import { Formik, Form, Field, ErrorMessage } from "formik";
+import { useContext } from "react";
+import { pathContext } from "../context/Context";
+import UIkit from "uikit";
+import client from "../axios/client";
+
+function NewFolder({ folder, setNewFolder, fetchData }) {
 	console.log("New Folder component");
-	const [newFolderName, setNewFolderName] = useState(folder);
-	const [inputStyle, setInputStyle] = useState(newFolderFocusOutlineStyle);
+	const { path, setPath } = useContext(pathContext);
 
-	const renameFolder = (e) => {
-		//const newName = e.target.textContent;
-
-		setInputStyle(newFolderFocusOutlineStyle);
+	const createFolder = async (folder, path) => {
+		await client
+			.post("folder/", { folder: folder, path: path })
+			.then((res) => {
+				if (res) {
+					if (res.data.status == "success") {
+						UIkit.notification({
+							message: "Successfully created the folder",
+							status: "success",
+							pos: "bottom-center",
+							timeout: 3000,
+						});
+						fetchData();
+						setNewFolder("");
+					} else {
+						const errors = res.data.errors;
+						for (let i = 0; i < errors.length; i++) {
+							for (let j = 0; j < errors[i]["errors"].length; j++) {
+								UIkit.notification({
+									message: errors[i].field + ": " + errors[i]["errors"][j],
+									status: "danger",
+									pos: "bottom-center",
+									timeout: 3000,
+								});
+							}
+						}
+					}
+				}
+			})
+			.catch((err) => {
+				UIkit.notification({
+					message: "Failed to upload the file",
+					status: "danger",
+					pos: "bottom-center",
+					timeout: 3000,
+				});
+			});
 	};
-
-	const focusOut = (e) => {
-		setInputStyle(newFolderBlurOutlineStyle);
-	};
-
-	const inputFolderName = useRef(null);
-
-	const createFolder = () => {
-		setNewFolderName(inputFolderName.current.textContent);
-	};
-
-	useEffect(() => {
-		inputFolderName.current.focus();
-	}, [inputFolderName]);
 
 	return (
 		<div>
 			<div className="uk-tile uk-padding-small uk-tile-muted uk-margin-bottom">
-				<h5
-					style={inputStyle}
-					autoFocus
-					ref={inputFolderName}
-					contentEditable="true"
-					onInput={renameFolder}
-					onBlur={focusOut}
-					suppressContentEditableWarning={true}
+				<Formik
+					initialValues={{ new_folder: "" }}
+					validate={(values) => {
+						const errors = {};
+						if (!values.new_folder) {
+							errors.new_folder = "Required";
+						}
+						return errors;
+					}}
+					onSubmit={(values, { setSubmitting }) => {
+						//console.log(JSON.stringify(values, null, 2));
+						createFolder(values["new_folder"], path);
+						setSubmitting(true);
+					}}
 				>
-					{newFolderName.name}
-				</h5>
-				<button className="uk-button uk-button-default" onClick={createFolder}>
-					Save
-				</button>
+					{({ isSubmitting }) => (
+						<Form>
+							<Field type="new_folder" className="uk-input" name="new_folder" />
+							<ErrorMessage name="new_folder" component="div" />
+							<button
+								className="uk-button uk-button-default"
+								type="submit"
+								disabled={isSubmitting}
+							>
+								Submit
+							</button>
+						</Form>
+					)}
+				</Formik>
 			</div>
 		</div>
 	);

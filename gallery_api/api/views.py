@@ -3,7 +3,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from .utils import get_contents, s3_client, restructure_errors
 import os
-from .serializer import PathSerializer, UploadSerializer, DeleteSerializer
+from .serializer import PathSerializer, UploadSerializer, DeleteSerializer, CreateFolderSerializer
 from rest_framework.permissions import AllowAny
 from .response_data import SUCCESS, FAILED
 
@@ -39,7 +39,7 @@ class ObjectView(APIView):
     def put(self, request):
         serializer = UploadSerializer(data=request.data)
         if serializer.is_valid():
-            file = request.data['file']
+            file = serializer.data.get('file')
             path = serializer.data.get('path')
             client = s3_client()
             # If the path has been provided, then concatenate it with the root directory and
@@ -72,4 +72,38 @@ class ObjectView(APIView):
             response = FAILED
             errors = serializer.errors
             response['errors'] = restructure_errors(errors)
+        return Response(response)
+
+
+class FolderView(APIView):
+    permission_classes = [AllowAny, ]
+    parser_classes = (JSONParser,)
+
+    def post(self, request):
+        serializer = CreateFolderSerializer(data=request.data)
+        if serializer.is_valid():
+            file = serializer.data.get('folder')
+            path = serializer.data.get('path')
+            client = s3_client()
+            # If the path has been provided, then concatenate it with the root directory and
+            # or else, root directory will be the target directory.
+            if path:
+                target = os.getenv('AWS_S3_ROOT_DIRECTORY') + path
+            else:
+                target = os.getenv('AWS_S3_ROOT_DIRECTORY')
+
+            # Target folder.
+            target += str(file) + '/'
+
+            try:
+                client.put_object(Key=target, Bucket='spaceberg')
+                response = SUCCESS
+            except Exception as e:
+                print(e)
+                response = FAILED
+        else:
+            response = FAILED
+            errors = serializer.errors
+            response['errors'] = restructure_errors(errors)
+
         return Response(response)

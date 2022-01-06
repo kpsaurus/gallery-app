@@ -13,3 +13,8 @@ class UploadSerializer(serializers.Serializer):
 
 class DeleteSerializer(serializers.Serializer):
     file = serializers.CharField()
+
+
+class CreateFolderSerializer(serializers.Serializer):
+    folder = serializers.CharField(required=True, )
+    path = serializers.CharField(required=True, allow_blank=True)

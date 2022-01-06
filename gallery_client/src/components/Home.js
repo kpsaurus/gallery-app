@@ -92,7 +92,15 @@ function Home() {
 			</div>
 			<hr className="uk-margin-small"></hr>
 			<div className="uk-grid uk-child-width-1-4@m uk-grid-match">
-				{newFolder.name ? <NewFolder folder={newFolder} /> : ""}
+				{newFolder.name ? (
+					<NewFolder
+						folder={newFolder}
+						setNewFolder={setNewFolder}
+						fetchData={fetchData}
+					/>
+				) : (
+					""
+				)}
 
 				{items.folders
 					? items.folders.map((folder, index) => (

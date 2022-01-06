@@ -5,7 +5,7 @@ import { pathContext } from "../context/Context";
 
 function Upload({ fetchData }) {
 	console.log("Folder component");
-	const [setFile] = useState(null);
+	const [file, setFile] = useState(null);
 	const { path } = useContext(pathContext);
 
 	const fileUpload = {
