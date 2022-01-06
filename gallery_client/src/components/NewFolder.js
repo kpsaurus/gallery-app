@@ -16,7 +16,7 @@ function NewFolder({ folder }) {
 				if (res) {
 					if (res.data.status == "success") {
 						UIkit.notification({
-							message: "Successfully uploaded the file",
+							message: "Successfully created the folder",
 							status: "success",
 							pos: "bottom-center",
 							timeout: 3000,
