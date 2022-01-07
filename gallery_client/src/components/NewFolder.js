@@ -69,13 +69,15 @@ function NewFolder({ setNewFolder, fetchData }) {
 						<Form>
 							<Field type="new_folder" className="uk-input" name="new_folder" />
 							<ErrorMessage name="new_folder" component="div" />
-							<button
-								className="uk-button uk-button-default"
-								type="submit"
-								disabled={isSubmitting}
-							>
-								Submit
-							</button>
+							<div className="uk-margin">
+								<button
+									className="uk-button uk-button-primary uk-width-expand"
+									type="submit"
+									disabled={isSubmitting}
+								>
+									Create
+								</button>
+							</div>
 						</Form>
 					)}
 				</Formik>
