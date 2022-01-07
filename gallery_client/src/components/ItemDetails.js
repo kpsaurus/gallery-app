@@ -35,7 +35,7 @@ function ItemDetails({ details }) {
 	}
 
 	const delete_item = (e) => {
-		UIkit.modal.confirm("UIkit confirm!").then(
+		UIkit.modal.confirm("Do you want to delete the photo?").then(
 			function () {
 				deleteItem();
 			},
