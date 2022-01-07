@@ -34,7 +34,7 @@ def get_contents(path):
             for content in result.get('Contents'):
                 if content.get('Key') != path:
                     name = content.get('Key').replace(os.getenv("AWS_S3_ROOT_DIRECTORY"), '')
-                    file = {'name': name}
+                    file = {'path': name, 'name': name.split('/')[-1]}
                     files.append(file)
                 else:
                     # Avoiding any folders.
@@ -42,16 +42,20 @@ def get_contents(path):
                         url = client.generate_presigned_url('get_object',
                                                             Params={'Bucket': f'{os.getenv("AWS_S3_BUCKET_NAME")}',
                                                                     'Key': f'{path}'}, ExpiresIn=100)
-                        details = {'name': path, 'size': content.get('Size'), 'url': url}
+                        details = {'path': path, 'name': path.split('/')[-1], 'size': content.get('Size'), 'url': url}
                         data['details'] = details
 
             # Checking for other folders
             if result.get('CommonPrefixes'):
                 for prefix in result.get('CommonPrefixes'):
                     folder_name = prefix['Prefix'].replace(os.getenv("AWS_S3_ROOT_DIRECTORY"), '')
-                    folder = {'name': folder_name}
+                    folder_name_formatted = folder_name.split('/')
+                    if len(folder_name_formatted) >= 2:
+                        folder_name_formatted = folder_name_formatted[-2]
+                    else:
+                        folder_name_formatted = folder_name_formatted[0]
+                    folder = {'path': folder_name, 'name': folder_name_formatted}
                     folders.append(folder)
-
     return data
 
 

@@ -1,3 +1,4 @@
+import boto3
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -39,7 +40,7 @@ class ObjectView(APIView):
     def put(self, request):
         serializer = UploadSerializer(data=request.data)
         if serializer.is_valid():
-            file = serializer.data.get('file')
+            file = request.data['file']
             path = serializer.data.get('path')
             client = s3_client()
             # If the path has been provided, then concatenate it with the root directory and
@@ -50,7 +51,6 @@ class ObjectView(APIView):
                 target = os.getenv('AWS_S3_ROOT_DIRECTORY')
             # Target file.
             target += str(file)
-
             client.upload_fileobj(file, f"{os.getenv('AWS_S3_BUCKET_NAME')}", target)
 
             response = SUCCESS
@@ -75,7 +75,7 @@ class ObjectView(APIView):
         return Response(response)
 
 
-class FolderView(APIView):
+class CreateFolderView(APIView):
     permission_classes = [AllowAny, ]
     parser_classes = (JSONParser,)
 
