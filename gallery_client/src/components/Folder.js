@@ -5,7 +5,7 @@ function Folder({ folder }) {
 	const [itemStyle, setItemStyle] = useState({});
 	const { setPath } = useContext(pathContext);
 	const select = (e) => {
-		setPath(folder.name);
+		setPath(folder.path);
 		setItemStyle(selectItemStyle);
 	};
 

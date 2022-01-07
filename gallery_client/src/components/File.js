@@ -13,7 +13,7 @@ function File({ file }) {
 	const { setPath } = useContext(pathContext);
 	const select = (e) => {
 		setItemStyle(selectItemStyle);
-		setPath(file.name);
+		setPath(file.path);
 	};
 	const mouseHover = (e) => {
 		setItemStyle(hoverInStyle);
