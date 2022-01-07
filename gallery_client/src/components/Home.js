@@ -68,13 +68,13 @@ function Home() {
 	return (
 		<div>
 			<h1
-				className="uk-text-center uk-margin-top uk-text-success pointer"
+				className="uk-text-center uk-margin-top pointer"
 				onClick={(e) => setPath("")}
 			>
 				Gallery
 			</h1>
-			<hr className="uk-divider-icon uk-margin-remove"></hr>
-			<div className="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap">
+			<hr className="uk-margin-remove"></hr>
+			<div className="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap path-bar">
 				<p className="uk-margin-remove">Current path: {path ? path : '"/"'}</p>
 				{!itemDetails.name ? (
 					<div className="uk-flex uk-flex-wrap">
@@ -90,34 +90,36 @@ function Home() {
 					""
 				)}
 			</div>
-			<hr className="uk-margin-small"></hr>
-			<div className="uk-grid uk-child-width-1-4@m uk-grid-match">
-				{newFolder.name ? (
-					<NewFolder
-						folder={newFolder}
-						setNewFolder={setNewFolder}
-						fetchData={fetchData}
-					/>
-				) : (
-					""
-				)}
+			<hr className="uk-margin-remove"></hr>
+			<div className="uk-margin-top">
+				<div className="uk-grid uk-child-width-1-4@m uk-grid-match">
+					{newFolder.name ? (
+						<NewFolder
+							folder={newFolder}
+							setNewFolder={setNewFolder}
+							fetchData={fetchData}
+						/>
+					) : (
+						""
+					)}
 
-				{items.folders
-					? items.folders.map((folder, index) => (
-							<div key={index}>
-								<Folder folder={folder} />
-							</div>
-					  ))
-					: ""}
-				{items.files
-					? items.files.map((file, index) => (
-							<div key={index}>
-								<File file={file} />
-							</div>
-					  ))
-					: ""}
+					{items.folders
+						? items.folders.map((folder, index) => (
+								<div key={index}>
+									<Folder folder={folder} />
+								</div>
+						  ))
+						: ""}
+					{items.files
+						? items.files.map((file, index) => (
+								<div key={index}>
+									<File file={file} />
+								</div>
+						  ))
+						: ""}
+				</div>
+				{itemDetails.name ? <ItemDetails details={itemDetails} /> : ""}
 			</div>
-			{itemDetails.name ? <ItemDetails details={itemDetails} /> : ""}
 		</div>
 	);
 }
