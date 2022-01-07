@@ -1,3 +1,4 @@
+import boto3
 from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -75,7 +76,7 @@ class ObjectView(APIView):
         return Response(response)
 
 
-class FolderView(APIView):
+class CreateFolderView(APIView):
     permission_classes = [AllowAny, ]
     parser_classes = (JSONParser,)
 
