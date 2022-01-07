@@ -1,20 +1,19 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { useContext } from "react";
 import { pathContext } from "../context/Context";
 import UIkit from "uikit";
 import client from "../axios/client";
 
-function NewFolder({ folder, setNewFolder, fetchData }) {
-	console.log("New Folder component");
-	const { path, setPath } = useContext(pathContext);
+function NewFolder({ setNewFolder, fetchData }) {
+	const { path } = useContext(pathContext);
 
 	const createFolder = async (folder, path) => {
 		await client
 			.post("folder/", { folder: folder, path: path })
 			.then((res) => {
 				if (res) {
-					if (res.data.status == "success") {
+					if (res.data.status === "success") {
 						UIkit.notification({
 							message: "Successfully created the folder",
 							status: "success",

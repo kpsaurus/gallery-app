@@ -4,7 +4,6 @@ import { pathContext } from "../context/Context";
 import { useContext } from "react";
 
 function ItemDetails({ details }) {
-	console.log("Item Details component");
 	const { path, setPath } = useContext(pathContext);
 
 	async function deleteItem() {

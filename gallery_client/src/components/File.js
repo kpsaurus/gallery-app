@@ -1,14 +1,8 @@
-import {
-	breakWordStyle,
-	selectItemStyle,
-	hoverInStyle,
-	hoverOutStyle,
-} from "../utils/Styles";
+import { breakWordStyle, selectItemStyle } from "../utils/Styles";
 import { useState, useContext } from "react";
 import { pathContext } from "../context/Context";
 
 function File({ file }) {
-	console.log("File component");
 	const [itemStyle, setItemStyle] = useState({});
 	const { setPath } = useContext(pathContext);
 	const select = (e) => {

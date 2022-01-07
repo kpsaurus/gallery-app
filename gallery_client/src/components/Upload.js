@@ -1,13 +1,10 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import client from "../axios/client";
 import UIkit from "uikit";
 import { pathContext } from "../context/Context";
 
 function Upload({ fetchData }) {
-	console.log("Folder component");
-	const [file, setFile] = useState(null);
 	const { path } = useContext(pathContext);
-
 	const fileUpload = {
 		cursor: "pointer",
 	};
@@ -17,7 +14,7 @@ function Upload({ fetchData }) {
 			.put("object/", formData)
 			.then((res) => {
 				if (res) {
-					if (res.data.status == "success") {
+					if (res.data.status === "success") {
 						UIkit.notification({
 							message: "Successfully uploaded the file",
 							status: "success",
@@ -51,9 +48,7 @@ function Upload({ fetchData }) {
 	}
 
 	const fileChange = (e) => {
-		setFile(e.target.files[0]);
 		const formData = new FormData();
-
 		formData.append("path", path);
 		formData.append("file", e.target.files[0]);
 
