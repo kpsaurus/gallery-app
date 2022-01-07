@@ -70,7 +70,7 @@ function Home() {
 				className="uk-text-center uk-margin-top pointer"
 				onClick={(e) => setPath("")}
 			>
-				Gallery
+				Gallery App (React + Django)
 			</h1>
 			<hr className="uk-margin-remove"></hr>
 			<div className="uk-flex uk-flex-between uk-flex-middle uk-flex-wrap path-bar">
